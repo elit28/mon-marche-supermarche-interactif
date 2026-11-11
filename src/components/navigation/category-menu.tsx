@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { CategorySummary } from "@/types/catalog";
 import { Sheet } from "@/components/ui/sheet";
-import { AisleIcon, CloseIcon, TagIcon } from "@/components/ui/icons";
+import { CloseIcon, HeartIcon, ListIcon, TagIcon, UserIcon } from "@/components/ui/icons";
 import { CategoryIcon } from "./category-icon";
 
-export function CategoryMenu({ categories, compact = false }: { categories: CategorySummary[]; compact?: boolean }) {
+export function CategoryMenu({ categories }: { categories: CategorySummary[] }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   // Referme le plan du magasin après une navigation.
@@ -25,10 +25,12 @@ export function CategoryMenu({ categories, compact = false }: { categories: Cate
         type="button"
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
-        className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-forest-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-forest-800 active:scale-[0.97]"
+        aria-label="Menu : rayons et services"
+        className="grid size-10 shrink-0 place-items-center rounded-full text-ink transition hover:bg-cream-100 sm:size-11"
       >
-        <AisleIcon size={18} />
-        <span className={compact ? "sr-only sm:not-sr-only" : undefined}>Rayons</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
       </button>
       <Sheet open={open} onClose={() => setOpen(false)} labelledBy="plan-magasin-titre" placement="responsive-center">
         <div className="flex items-center justify-between border-b border-cream-200 px-5 py-4 sm:px-7">
@@ -43,6 +45,20 @@ export function CategoryMenu({ categories, compact = false }: { categories: Cate
           </button>
         </div>
         <nav aria-label="Rayons" className="overflow-y-auto px-3 py-4 pb-[calc(1rem+var(--safe-bottom))] sm:px-5">
+          <ul className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {[
+              { href: "/favoris", label: "Mes favoris", Icon: HeartIcon },
+              { href: "/listes", label: "Mes listes", Icon: ListIcon },
+              { href: "/mon-espace", label: "Mon espace", Icon: UserIcon },
+              { href: "/a-propos", label: "À propos", Icon: TagIcon },
+            ].map(({ href, label, Icon }) => (
+              <li key={href}>
+                <Link href={href} className="flex min-h-12 items-center gap-2 rounded-2xl bg-white px-3 text-sm font-semibold shadow-[0_1px_2px_rgb(23_35_28/0.06)] hover:text-forest-700">
+                  <Icon size={18} /> {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <ul className="grid grid-cols-1 gap-1.5 min-[420px]:grid-cols-2 lg:grid-cols-3">
             <li>
               <Link href="/promotions" className="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-tomato-50">

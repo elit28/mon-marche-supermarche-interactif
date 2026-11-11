@@ -71,7 +71,7 @@ export function AddToCart({ product, variant = "overlay", className }: AddToCart
           className={cn(
             "group/add grid place-items-center rounded-full transition-[transform,background-color,box-shadow] duration-200 active:scale-90",
             variant === "overlay"
-              ? "size-10 bg-white text-forest-700 shadow-[0_2px_10px_-2px_rgb(15_61_34/0.35)] ring-1 ring-forest-900/10 hover:bg-forest-700 hover:text-white"
+              ? "size-10 bg-white text-ink shadow-[0_3px_10px_-2px_rgb(23_35_28/0.35)] ring-1 ring-black/5 hover:bg-forest-700 hover:text-white"
               : "h-12 w-full gap-2 bg-forest-700 px-5 text-base font-semibold text-white shadow-soft hover:bg-forest-800",
           )}
         >
@@ -92,8 +92,10 @@ export function AddToCart({ product, variant = "overlay", className }: AddToCart
     <div
       ref={rootRef}
       className={cn(
-        "flex items-center justify-between rounded-full bg-forest-700 text-white shadow-[0_6px_16px_-6px_rgb(15_61_34/0.6)] animate-[pop_260ms_var(--ease-spring)]",
-        variant === "overlay" ? "h-10 w-[7.25rem] p-0.5" : "h-12 w-full p-1",
+        "flex items-center justify-between rounded-full animate-[pop_260ms_var(--ease-spring)]",
+        variant === "overlay"
+          ? "h-9 w-[6.5rem] bg-white p-0.5 text-ink shadow-[0_3px_10px_-2px_rgb(23_35_28/0.35)] ring-1 ring-black/5"
+          : "h-12 w-full bg-forest-700 p-1 text-white shadow-[0_6px_16px_-6px_rgb(15_61_34/0.6)]",
         className,
       )}
       role="group"
@@ -103,11 +105,11 @@ export function AddToCart({ product, variant = "overlay", className }: AddToCart
         type="button"
         onClick={() => actions.decrement(product)}
         aria-label={quantity === 1 ? `Retirer ${label} du panier` : `Retirer un ${label}`}
-        className="grid size-9 place-items-center rounded-full transition-colors hover:bg-white/15 active:scale-90"
+        className={cn("grid size-8 place-items-center rounded-full transition-colors active:scale-90", variant === "overlay" ? "hover:bg-cream-100" : "hover:bg-white/15")}
       >
-        <MinusIcon size={18} />
+        <MinusIcon size={16} />
       </button>
-      <span key={quantity} className="min-w-6 text-center text-base font-bold tabular-nums animate-[pop_220ms_var(--ease-spring)]" aria-live="off">
+      <span key={quantity} className="min-w-5 text-center text-sm font-bold tabular-nums animate-[pop_220ms_var(--ease-spring)]" aria-live="off">
         {quantity}
       </span>
       <button
@@ -115,9 +117,9 @@ export function AddToCart({ product, variant = "overlay", className }: AddToCart
         onClick={() => actions.increment(product)}
         disabled={quantity >= MAX_QUANTITY_PER_ITEM}
         aria-label={`Ajouter un ${label}`}
-        className="grid size-9 place-items-center rounded-full transition-colors hover:bg-white/15 active:scale-90 disabled:opacity-40"
+        className={cn("grid size-8 place-items-center rounded-full transition-colors active:scale-90 disabled:opacity-40", variant === "overlay" ? "hover:bg-cream-100" : "hover:bg-white/15")}
       >
-        <PlusIcon size={18} />
+        <PlusIcon size={16} />
       </button>
     </div>
   );

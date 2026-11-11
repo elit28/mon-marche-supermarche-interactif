@@ -47,7 +47,7 @@ export default async function RayonPage({ params, searchParams }: Props) {
             <CategoryIcon slug={slug} size={28} />
           </span>
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.14em]" style={{ color: category.accent }}>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-ink-soft">
               Rayon {String(position + 1).padStart(2, "0")}
             </p>
             <h1 className="font-display text-3xl font-semibold leading-tight sm:text-[2.6rem]">{category.name}</h1>

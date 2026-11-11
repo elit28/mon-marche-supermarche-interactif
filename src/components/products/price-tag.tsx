@@ -39,3 +39,19 @@ export function PriceTag({ product, className }: { product: ProductSummary; clas
     </div>
   );
 }
+
+/** Étiquette blanche clipsée sur l'étagère (prix final, prix barré si promotion). */
+export function ShelfLabelPrice({ product }: { product: ProductSummary }) {
+  const final = finalPriceCents(product);
+  return (
+    <span className="price-tag gap-1">
+      <ShelfPrice cents={final} size="sm" className={product.promotion ? "text-tomato-600" : "text-ink"} />
+      {product.promotion ? (
+        <span className="text-xs text-ink-muted line-through tabular-nums">
+          <span className="sr-only">au lieu de </span>
+          {formatPrice(product.priceCents)}
+        </span>
+      ) : null}
+    </span>
+  );
+}

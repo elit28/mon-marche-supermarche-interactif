@@ -2,6 +2,16 @@
 
 Analyse image par image de la vidéo fournie (2 min 29 s, interface « FreshCart » sur ordinateur).
 
+## Maquette : la vidéo et MON MARCHÉ côte à côte
+
+![Vidéo de référence à gauche, MON MARCHÉ sur ordinateur et mobile à droite](./maquette-comparaison.png)
+
+L'interface reprend la grammaire visuelle de la vidéo : en-tête blanc sur une ligne
+(logo, recherche, favoris, pastille « Total », compte, menu), rayons empilés avec un
+petit libellé en capitales, fond crème jusqu'à une étagère en verre teinté vert au
+chant épais, étiquettes de prix blanches clipsées sur le chant, bouton « + » blanc
+devenant « − 1 + », panier posé en bas de l'écran.
+
 ## Ce que montre la vidéo
 
 | Thème | Observation |
