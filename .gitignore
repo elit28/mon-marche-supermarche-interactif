@@ -1,0 +1,31 @@
+# Dépendances
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Build / outils
+dist/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# Cache du pipeline catalogue (réponses API brutes, images sources)
+.cache/
+
+# Environnement — ne jamais committer de secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Divers
+.DS_Store
+*.log
+npm-debug.log*
+pnpm-debug.log*

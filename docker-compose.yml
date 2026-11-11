@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------------------
+# MON MARCHÉ — environnement local
+#   Base seule (développement avec `pnpm dev`) :  docker compose up -d db
+#   Démonstration complète :                       docker compose --profile app up --build
+# ---------------------------------------------------------------------------
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: monmarche
+      POSTGRES_PASSWORD: monmarche
+      POSTGRES_DB: monmarche
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monmarche -d monmarche"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  setup:
+    profiles: ["app"]
+    build:
+      context: .
+      target: tools
+    environment:
+      DATABASE_URL: postgres://monmarche:monmarche@db:5432/monmarche
+    depends_on:
+      db:
+        condition: service_healthy
+
+  app:
+    profiles: ["app"]
+    build:
+      context: .
+      target: runner
+    environment:
+      DATABASE_URL: postgres://monmarche:monmarche@db:5432/monmarche
+      SESSION_SECRET: ${SESSION_SECRET:-change-moi-change-moi-change-moi-change-moi-0000}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      ADMIN_IMPORT_ENABLED: ${ADMIN_IMPORT_ENABLED:-false}
+    ports:
+      - "3000:3000"
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+
+volumes:
+  pgdata:
