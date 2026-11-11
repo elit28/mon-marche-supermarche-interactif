@@ -67,7 +67,7 @@ export default async function SearchPage({ searchParams }: Props) {
               title={g.category.name}
               eyebrow={getCategoryDefinition(g.category.slug)?.shortName}
               accent={g.category.accent}
-              icon={<CategoryIcon slug={g.category.slug} size={22} />}
+              icon={<CategoryIcon slug={g.category.slug} size={16} />}
               countLabel={`${g.count} sur ${g.category.productCount}`}
               href={g.count > g.products.length ? `/recherche${toQueryString({ ...params, categorie: [g.category.slug] })}` : undefined}
               hrefLabel="Tous les résultats"

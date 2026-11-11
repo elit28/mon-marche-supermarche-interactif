@@ -16,13 +16,13 @@ test.describe("recherche et fiches", () => {
 
   test("trie et filtre via l'URL (prix croissant, bio, promotions)", async ({ page }) => {
     await page.goto("/recherche?tri=prix-asc&categorie=boissons-eaux");
-    const prices = await page.locator("li[data-slot] .price-tag span[aria-label]").evaluateAll((els) =>
-      els.slice(0, 8).map((el) => Number.parseFloat((el.getAttribute("aria-label") ?? "0").replace(/[^\d,]/g, "").replace(",", "."))),
+    const prices = await page.locator("li[data-slot] .price-tag [data-price]").evaluateAll((els) =>
+      els.slice(0, 8).map((el) => Number.parseInt(el.getAttribute("data-price") ?? "0", 10)),
     );
     expect(prices.length).toBeGreaterThan(2);
     expect([...prices].sort((a, b) => a - b)).toEqual(prices);
     await page.goto("/recherche?bio=1");
-    await expect(page.getByRole("button", { name: "Bio" })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("button", { name: "Bio", exact: true })).toHaveAttribute("aria-pressed", "true");
     await page.goto("/recherche?promo=1");
     expect(await page.locator("li[data-slot]").count()).toBeGreaterThan(0);
     await expect(page.locator("li[data-slot]").first()).toContainText(/%|€/);
@@ -34,7 +34,7 @@ test.describe("recherche et fiches", () => {
     await slot.getByRole("link", { name: /^Voir la fiche/ }).click();
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByText("Informations et provenance")).toBeVisible();
+    await dialog.getByText("Informations et provenance").click();
     await expect(dialog.getByRole("link", { name: /Fiche Open .* Facts/ })).toHaveAttribute("href", /openfoodfacts|openbeautyfacts|openproductsfacts|openpetfoodfacts/);
     await expect(dialog.getByText(/Prix fictif de démonstration/)).toBeVisible();
     await page.keyboard.press("Escape");
@@ -47,8 +47,11 @@ test.describe("recherche et fiches", () => {
     const href = await firstSlot(page).getByRole("link", { name: /^Voir la fiche/ }).getAttribute("href");
     await page.goto(href!);
     await expect(page.getByRole("heading", { level: 2 }).first()).toBeVisible();
-    await expect(page.getByText(/Code-barres/)).toBeVisible();
-    await page.getByRole("button", { name: "Ajouter au panier" }).click();
+    await page.getByText("Informations et provenance").click();
+    await expect(page.getByText("Code-barres", { exact: true })).toBeVisible();
+    const add = page.getByRole("button", { name: "Ajouter au panier" });
+    await add.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    await add.click();
     await expect(page.getByRole("group", { name: /Quantité de/ }).first()).toContainText("1");
   });
 });

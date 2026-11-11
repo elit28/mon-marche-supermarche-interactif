@@ -123,7 +123,10 @@ export function ProductDetail({ product, similar, titleId = "fiche-produit-titre
                   <ShelfPrice cents={final} size="lg" className={product.promotion ? "text-tomato-600" : "text-ink"} />
                   {product.promotion ? (
                     <>
-                      <span className="text-sm text-ink-muted line-through">{formatPrice(product.priceCents)}</span>
+                      <span className="text-sm text-ink-muted line-through">
+                        <span className="sr-only">au lieu de </span>
+                        {formatPrice(product.priceCents)}
+                      </span>
                       <span className="rounded-full bg-tomato-600 px-2 py-0.5 text-sm font-bold text-white">{product.promotion.label}</span>
                     </>
                   ) : null}

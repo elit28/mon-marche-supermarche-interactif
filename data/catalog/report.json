@@ -1,0 +1,244 @@
+{
+ "generatedAt": "2026-11-11T19:51:57.470Z",
+ "totals": {
+  "candidates": 1823,
+  "valid": 1543,
+  "duplicates": 8,
+  "cutoutPackshot": 746,
+  "cutoutAi": 287,
+  "selected": 588,
+  "target": 618
+ },
+ "rejections": {
+  "retailer_brand": 163,
+  "not_sold_in_france": 57,
+  "rejected_after_v3": 27,
+  "no_category": 33,
+  "manual_review": 103,
+  "image_error": 4,
+  "cutout_rejected": 395
+ },
+ "aiRejections": {
+  "silhouette trop petite (détail isolé)": 100,
+  "silhouette fragmentée": 209,
+  "silhouette irrégulière": 61,
+  "masque incertain (zones semi-transparentes)": 24,
+  "aucun fond retiré": 1
+ },
+ "screeningRejections": {
+  "name_is_brand": 45,
+  "missing_image": 417,
+  "invalid_barcode": 214,
+  "missing_name": 390,
+  "retailer_brand": 2737,
+  "missing_brand": 542,
+  "excluded_category": 61,
+  "restricted_barcode": 190
+ },
+ "categories": [
+  {
+   "slug": "fruits-legumes",
+   "name": "Fruits et légumes",
+   "target": 30,
+   "available": 27,
+   "selected": 27,
+   "packshot": 25,
+   "ia": 2
+  },
+  {
+   "slug": "produits-laitiers-oeufs",
+   "name": "Produits laitiers et œufs",
+   "target": 40,
+   "available": 95,
+   "selected": 40,
+   "packshot": 40,
+   "ia": 0
+  },
+  {
+   "slug": "fromages",
+   "name": "Fromages",
+   "target": 35,
+   "available": 65,
+   "selected": 35,
+   "packshot": 35,
+   "ia": 0
+  },
+  {
+   "slug": "viandes-charcuterie",
+   "name": "Viandes et charcuterie",
+   "target": 32,
+   "available": 44,
+   "selected": 32,
+   "packshot": 32,
+   "ia": 0
+  },
+  {
+   "slug": "poissons-produits-mer",
+   "name": "Poissons et produits de la mer",
+   "target": 25,
+   "available": 33,
+   "selected": 25,
+   "packshot": 19,
+   "ia": 6
+  },
+  {
+   "slug": "boulangerie-patisserie",
+   "name": "Boulangerie et pâtisserie",
+   "target": 28,
+   "available": 62,
+   "selected": 28,
+   "packshot": 28,
+   "ia": 0
+  },
+  {
+   "slug": "pates-riz-feculents",
+   "name": "Pâtes, riz et féculents",
+   "target": 36,
+   "available": 56,
+   "selected": 36,
+   "packshot": 36,
+   "ia": 0
+  },
+  {
+   "slug": "conserves-epicerie-salee",
+   "name": "Conserves et épicerie salée",
+   "target": 45,
+   "available": 91,
+   "selected": 45,
+   "packshot": 45,
+   "ia": 0
+  },
+  {
+   "slug": "biscuits-gateaux",
+   "name": "Biscuits et gâteaux",
+   "target": 45,
+   "available": 80,
+   "selected": 45,
+   "packshot": 45,
+   "ia": 0
+  },
+  {
+   "slug": "chocolats-confiseries",
+   "name": "Chocolats et confiseries",
+   "target": 36,
+   "available": 58,
+   "selected": 36,
+   "packshot": 36,
+   "ia": 0
+  },
+  {
+   "slug": "petit-dejeuner",
+   "name": "Petit-déjeuner",
+   "target": 45,
+   "available": 98,
+   "selected": 45,
+   "packshot": 45,
+   "ia": 0
+  },
+  {
+   "slug": "boissons-eaux",
+   "name": "Boissons et eaux",
+   "target": 45,
+   "available": 95,
+   "selected": 45,
+   "packshot": 45,
+   "ia": 0
+  },
+  {
+   "slug": "surgeles",
+   "name": "Surgelés",
+   "target": 30,
+   "available": 15,
+   "selected": 15,
+   "packshot": 12,
+   "ia": 3
+  },
+  {
+   "slug": "produits-bio",
+   "name": "Produits bio",
+   "target": 30,
+   "available": 43,
+   "selected": 30,
+   "packshot": 25,
+   "ia": 5
+  },
+  {
+   "slug": "hygiene-beaute",
+   "name": "Hygiène et beauté",
+   "target": 36,
+   "available": 59,
+   "selected": 36,
+   "packshot": 20,
+   "ia": 16
+  },
+  {
+   "slug": "entretien-maison",
+   "name": "Entretien de la maison",
+   "target": 28,
+   "available": 47,
+   "selected": 28,
+   "packshot": 14,
+   "ia": 14
+  },
+  {
+   "slug": "bebe",
+   "name": "Produits pour bébé",
+   "target": 26,
+   "available": 51,
+   "selected": 26,
+   "packshot": 24,
+   "ia": 2
+  },
+  {
+   "slug": "animaux",
+   "name": "Produits pour animaux",
+   "target": 26,
+   "available": 14,
+   "selected": 14,
+   "packshot": 3,
+   "ia": 11
+  }
+ ],
+ "duplicates": [
+  {
+   "barcode": "3608580124108",
+   "name": "Be Nuts! Pâte à tartiner Cacahuète",
+   "duplicateOf": "3608580124047"
+  },
+  {
+   "barcode": "3046920028004",
+   "name": "Excellence Noir Subtil Doux 70% Cacao",
+   "duplicateOf": "3046920029780"
+  },
+  {
+   "barcode": "7613032655495",
+   "name": "Chicorée & Café, RICORÉ® L'Original, Boîte de",
+   "duplicateOf": "7613035676497"
+  },
+  {
+   "barcode": "8000500037560",
+   "name": "Bueno",
+   "duplicateOf": "80052760"
+  },
+  {
+   "barcode": "4008400404127",
+   "name": "Nutella",
+   "duplicateOf": "80176800"
+  },
+  {
+   "barcode": "3502490013944",
+   "name": "Pruneaux d'Agen Dénoyautés",
+   "duplicateOf": "3502490171606"
+  },
+  {
+   "barcode": "8717496041647",
+   "name": "Framboises",
+   "duplicateOf": "8717496041425"
+  },
+  {
+   "barcode": "3502490237586",
+   "name": "Pruneaux d'agen dénoyautés",
+   "duplicateOf": "3502490177127"
+  }
+ ]
+}

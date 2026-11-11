@@ -1,14 +1,18 @@
 "use client";
 
 /** Fenêtre de fiche produit ouverte par-dessus les rayons (route interceptée). */
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Sheet } from "@/components/ui/sheet";
 import { CloseIcon } from "@/components/ui/icons";
 
 export function ProductModal({ children, titleId }: { children: React.ReactNode; titleId: string }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [open, setOpen] = useState(true);
+  // Le créneau @modal conserve son contenu lors d'une navigation douce vers une autre
+  // page : la fenêtre se retire d'elle-même dès que l'URL n'est plus celle d'un produit.
+  if (!pathname.startsWith("/produit/")) return null;
 
   const close = () => {
     setOpen(false);

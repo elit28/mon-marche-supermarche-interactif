@@ -11,15 +11,15 @@ test.describe("panier", () => {
     // Le bouton devient un compteur immédiatement.
     const group = slot.getByRole("group", { name: /Quantité de/ });
     await expect(group).toContainText("1");
-    await expect(page.getByRole("button", { name: /^Ouvrir le panier : 1 article/ }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Ouvrir le panier :.* 1 article$/ }).first()).toBeVisible();
 
     await group.getByRole("button", { name: /^Ajouter un/ }).click();
     await expect(group).toContainText("2");
-    await expect(page.getByRole("button", { name: /^Ouvrir le panier : 2 articles/ }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Ouvrir le panier :.* 2 articles$/ }).first()).toBeVisible();
 
     // Persistance.
     await page.reload();
-    await expect(page.getByRole("button", { name: /^Ouvrir le panier : 2 articles/ }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Ouvrir le panier :.* 2 articles$/ }).first()).toBeVisible();
 
     await openCart(page);
     const lines = page.getByRole("list", { name: "Articles du panier" }).getByRole("listitem");
@@ -27,7 +27,7 @@ test.describe("panier", () => {
     await lines.first().getByRole("button", { name: /^Retirer un/ }).click();
     await expect(lines.first()).toContainText("1");
     await lines.first().getByRole("button", { name: /du panier$/ }).click();
-    await expect(page.getByText("Votre panier est vide")).toBeVisible();
+    await expect(page.getByRole("dialog").getByText("Votre panier est vide")).toBeVisible();
   });
 
   test("vide le panier après confirmation", async ({ page }) => {
@@ -40,7 +40,7 @@ test.describe("panier", () => {
     await expect(page.getByRole("list", { name: "Articles du panier" }).getByRole("listitem")).toHaveCount(3);
     await page.getByRole("button", { name: "Vider le panier" }).click();
     await page.getByRole("button", { name: "Vider", exact: true }).click();
-    await expect(page.getByText("Votre panier est vide")).toBeVisible();
+    await expect(page.getByRole("dialog").getByText("Votre panier est vide")).toBeVisible();
   });
 
   test("annonce les ajouts aux technologies d'assistance", async ({ page }) => {
@@ -53,7 +53,7 @@ test.describe("panier", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
     await firstSlot(page, "promotions").getByRole("button", { name: /^Ajouter .* au panier/ }).click();
-    await expect(page.getByRole("button", { name: /^Ouvrir le panier : 1 article/ }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Ouvrir le panier :.* 1 article$/ }).first()).toBeVisible();
     // Aucune copie volante de l'emballage n'est créée.
     expect(await page.locator("body > div[aria-hidden=true] > img").count()).toBe(0);
   });

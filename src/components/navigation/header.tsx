@@ -30,9 +30,6 @@ function FavoritesLink() {
 export function Header({ categories }: { categories: CategorySummary[] }) {
   return (
     <header className="sticky top-0 z-40 border-b border-forest-900/8 bg-cream-50/88 backdrop-blur-md supports-[backdrop-filter]:bg-cream-50/75">
-      <a href="#contenu" className="sr-only-focusable absolute left-3 top-2 z-50 rounded-full bg-forest-700 px-4 py-2 text-sm font-semibold text-white">
-        Aller au contenu
-      </a>
       <div className="mx-auto flex max-w-[110rem] flex-wrap items-center gap-x-2 gap-y-2 px-4 py-2 sm:gap-x-3 sm:px-6 lg:flex-nowrap lg:gap-x-5 lg:py-2.5 lg:px-10">
         <Link href="/" className="shrink-0 rounded-xl" aria-label="MON MARCHÉ — accueil">
           <Logo compact />

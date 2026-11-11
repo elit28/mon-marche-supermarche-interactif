@@ -16,7 +16,7 @@ test.describe("parcours complets", () => {
     await expect(page.getByRole("heading", { name: "Vérifiez les quantités" })).toBeVisible();
     await page.getByRole("button", { name: "Continuer" }).click();
     await page.getByLabel("Code postal").fill("123");
-    await expect(page.getByRole("alert")).toContainText("5 chiffres");
+    await expect(page.getByText(/doit comporter 5 chiffres/)).toBeVisible();
     await page.getByLabel("Code postal").fill("");
     await page.getByRole("button", { name: "Passer cette étape" }).click();
     await page.getByLabel("Retrait au magasin").check();
@@ -26,9 +26,9 @@ test.describe("parcours complets", () => {
     await page.getByRole("checkbox", { name: /simulation/ }).check();
     await submit.click();
     await expect(page.getByRole("heading", { name: "Commande simulée !" })).toBeVisible();
-    await expect(page.getByText(/DEMO-[A-Z0-9]{6}/)).toBeVisible();
+    await expect(page.locator("strong.font-mono")).toHaveText(/^DEMO-[A-Z0-9]{6}$/);
     await expect(page.getByText(/aucun paiement/i).first()).toBeVisible();
-    await expect(page.getByRole("button", { name: /^Ouvrir le panier : 0 article/ }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Ouvrir le panier :.* 0 article$/ }).first()).toBeVisible();
   });
 
   test("favoris, liste de courses partagée et conversion en panier", async ({ page, context }) => {
@@ -36,20 +36,22 @@ test.describe("parcours complets", () => {
     const slot = firstSlot(page, "promotions");
     await slot.getByRole("link", { name: /^Voir la fiche/ }).click();
     const dialog = page.getByRole("dialog");
-    await dialog.getByRole("button", { name: /aux favoris$/ }).click();
+    await dialog.getByRole("button", { name: /aux favoris$/ }).first().click();
     await dialog.getByRole("button", { name: "Ajouter à une liste" }).click();
     await dialog.getByLabel("Nom de la nouvelle liste").fill("Courses du test");
     await dialog.getByRole("button", { name: /Créer la liste/ }).click();
     await expect(dialog.getByRole("status").filter({ hasText: "Courses du test" })).toBeVisible();
     await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(page).toHaveURL(/\/$/);
 
     await page.goto("/favoris");
-    expect(await page.locator("li[data-slot]").count()).toBe(1);
+    await expect(page.locator("li[data-slot]")).toHaveCount(1);
 
     await page.goto("/listes");
     await page.getByRole("link", { name: /Courses du test/ }).click();
     await page.getByLabel("Ajouter un article").fill("Pain de campagne");
-    await page.getByRole("button", { name: "Ajouter l’article" }).click();
+    await page.getByRole("button", { name: /Ajouter l.article/ }).click();
     await expect(page.getByText("Pain de campagne")).toBeVisible();
     await page.getByRole("button", { name: "Créer un lien de partage" }).click();
     const shareUrl = await page.getByLabel("Lien de partage").inputValue();
@@ -73,6 +75,6 @@ test.describe("parcours complets", () => {
     await page.getByLabel("Adresse e-mail").fill("intrus@example.com");
     await page.getByLabel("Mot de passe").fill("mauvais-mot-de-passe");
     await page.getByRole("button", { name: "Se connecter" }).click();
-    await expect(page.getByRole("alert")).toContainText("Identifiants invalides");
+    await expect(page.getByText("Identifiants invalides.")).toBeVisible();
   });
 });
