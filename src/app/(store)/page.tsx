@@ -1,6 +1,5 @@
 import { getCategoryDefinition } from "@/lib/catalog/categories";
 import { getPromotedProducts, getShelf, listCategories } from "@/server/services/catalog";
-import { AisleNav } from "@/components/navigation/aisle-nav";
 import { CategoryIcon } from "@/components/navigation/category-icon";
 import { RecentlyViewedShelf } from "@/components/home/recently-viewed-shelf";
 import { LazyShelf } from "@/components/shelves/lazy-shelf";
@@ -49,9 +48,7 @@ export default async function HomePage() {
   return (
     <>
       <h1 className="sr-only">MON MARCHÉ — vos courses, rayon par rayon : {productCount} vrais produits, prix fictifs de démonstration</h1>
-      <AisleNav categories={categories} />
-
-      <div className="space-y-5 pb-8 pt-4 sm:space-y-6 sm:pt-5">
+      <div className="pb-8">
         {shelves.slice(0, EAGER_SHELVES)}
 
         {promos.products.length > 0 ? (

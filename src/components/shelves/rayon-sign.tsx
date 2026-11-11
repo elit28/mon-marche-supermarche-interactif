@@ -7,8 +7,8 @@ import { cn } from "@/lib/cn";
 export function RayonSign({
   id,
   title,
-  accent = "#166534",
-  icon,
+  accent: _accent,
+  icon: _icon,
   countLabel,
   as: Heading = "h2",
   className,
@@ -24,12 +24,7 @@ export function RayonSign({
 }) {
   return (
     <div className={cn("flex min-w-0 items-center gap-2", className)}>
-      {icon ? (
-        <span className="grid size-6 shrink-0 place-items-center rounded-md text-white [&_svg]:size-4" style={{ backgroundColor: accent }} aria-hidden="true">
-          {icon}
-        </span>
-      ) : null}
-      <Heading id={id} className="truncate text-[0.8rem] font-bold uppercase tracking-[0.12em] text-ink sm:text-[0.85rem]">
+      <Heading id={id} className="truncate text-[0.75rem] font-bold uppercase tracking-[0.14em] text-ink-soft sm:text-[0.8rem]">
         {title}
         {countLabel ? <span className="ml-2 font-medium normal-case tracking-normal text-ink-muted">{countLabel}</span> : null}
       </Heading>
