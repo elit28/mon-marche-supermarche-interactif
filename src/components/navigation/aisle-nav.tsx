@@ -36,7 +36,7 @@ export function AisleNav({ categories }: { categories: CategorySummary[] }) {
 
   return (
     <nav aria-label="Allées du magasin" className="z-20 border-b border-forest-900/6 bg-cream-50/85 backdrop-blur md:sticky md:top-[var(--header-h)]">
-      <ul ref={listRef} className="shelf-scroller mx-auto flex max-w-[110rem] gap-2 px-4 py-2.5 sm:px-6 lg:px-10">
+      <ul ref={listRef} className="shelf-scroller mx-auto flex max-w-[110rem] gap-1.5 px-4 py-2 sm:px-6 lg:px-10">
         {categories.map((c) => (
           <li key={c.slug} className="shrink-0">
             <a
@@ -44,7 +44,7 @@ export function AisleNav({ categories }: { categories: CategorySummary[] }) {
               data-aisle={c.slug}
               aria-current={current === c.slug ? "location" : undefined}
               className={cn(
-                "inline-flex h-10 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors",
+                "inline-flex h-9 items-center gap-1.5 rounded-full border px-3 text-[0.82rem] font-medium transition-colors",
                 current === c.slug ? "border-transparent bg-forest-700 text-white" : "border-forest-900/10 bg-white text-ink-soft hover:border-forest-700/40 hover:text-forest-800",
               )}
             >

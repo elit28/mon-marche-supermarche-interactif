@@ -77,13 +77,10 @@ function ProductSlotComponent({ product, priority = false, fixedWidth = false }:
         <AddToCart product={product} className="absolute bottom-1 right-1 z-10" />
       </div>
 
-      {/* Prix et nom, sous l'étagère. */}
-      <div className="price-tag relative mx-1 mt-[0.95rem] px-1 pb-2">
+      {/* Prix sous l'étagère, comme une étiquette de rayon. */}
+      <div className="price-tag relative mx-1 mt-[0.95rem] px-1 pb-2" title={label}>
         <PriceTag product={product} />
-        <p className="mx-auto mt-0.5 line-clamp-1 max-w-full text-[0.8rem] leading-snug text-ink-muted" title={label}>
-          {product.name}
-          {product.quantity ? <span> · {product.quantity}</span> : null}
-        </p>
+        <span className="sr-only">{label}</span>
       </div>
     </li>
   );

@@ -17,6 +17,7 @@ FROM base AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ENV NEXT_OUTPUT=standalone
 RUN pnpm build
 
 # Outils : migrations, import de l'instantané, création d'un administrateur.

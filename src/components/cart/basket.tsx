@@ -38,9 +38,9 @@ export function DesktopBasket() {
       <button
         type="button"
         onClick={openCart}
-        aria-label={`Ouvrir le panier : ${count} article${count > 1 ? "s" : ""}, total ${formatPrice(totals.totalCents)}`}
         className="group pointer-events-auto relative h-[5.6rem] w-[15.5rem] translate-y-3 transition-transform duration-300 ease-[var(--ease-out-soft)] hover:translate-y-0 focus-visible:translate-y-0"
       >
+        <span className="sr-only">Ouvrir le panier : </span>
         {/* Emballages dans le panier */}
         <span className="absolute inset-x-0 bottom-9 flex h-16 items-end justify-center" data-cart-target="primary">
           {latest.map((p, i) => {
@@ -100,12 +100,12 @@ export function MobileCartBar() {
       <button
         type="button"
         onClick={openCart}
-        aria-label={`Ouvrir le panier : ${count} article${count > 1 ? "s" : ""}, total ${formatPrice(totals.totalCents)}`}
         className={cn(
           "flex h-16 w-full items-center gap-3 rounded-2xl px-3 text-left shadow-float transition-colors duration-300",
           count > 0 ? "bg-forest-900 text-white" : "bg-white text-ink ring-1 ring-forest-900/10",
         )}
       >
+        <span className="sr-only">Ouvrir le panier : </span>
         <span key={bump} data-cart-target="primary" className={cn("relative grid size-11 shrink-0 place-items-center rounded-xl animate-[pop_320ms_var(--ease-spring)]", count > 0 ? "bg-forest-700" : "bg-leaf-100 text-forest-700")}>
           <BasketIcon size={22} />
           {count > 0 ? (

@@ -7,7 +7,8 @@ import type { ProductSummary } from "@/types/catalog";
 export function ShelfPrice({ cents, className, size = "md" }: { cents: number; className?: string; size?: "sm" | "md" | "lg" }) {
   const { euros, cents: c } = splitPrice(cents);
   return (
-    <span className={cn("inline-flex items-start font-bold tabular-nums tracking-tight", className)} aria-label={formatPrice(cents)}>
+    <span className={cn("inline-flex items-start font-bold tabular-nums tracking-tight", className)} data-price={cents}>
+      <span className="sr-only">{formatPrice(cents)}</span>
       <span aria-hidden="true" className={size === "lg" ? "text-4xl leading-none" : size === "sm" ? "text-[1.05rem] leading-none" : "text-[1.3rem] leading-none"}>
         {euros}
       </span>
@@ -28,7 +29,8 @@ export function PriceTag({ product, className }: { product: ProductSummary; clas
       <div className="flex items-baseline justify-center gap-1.5">
         <ShelfPrice cents={final} size="sm" className={promo ? "text-tomato-600" : "text-ink"} />
         {promo ? (
-          <span className="text-xs text-ink-muted line-through tabular-nums" aria-label={`au lieu de ${formatPrice(product.priceCents)}`}>
+          <span className="text-xs text-ink-muted line-through tabular-nums">
+            <span className="sr-only">au lieu de </span>
             {formatPrice(product.priceCents)}
           </span>
         ) : null}

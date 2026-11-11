@@ -137,13 +137,13 @@ export function Shelf({
 
   return (
     <section id={id} aria-labelledby={headingId} className="relative scroll-mt-[calc(var(--header-h)+4rem)]">
-      <div className="mx-auto flex max-w-[110rem] items-end justify-between gap-3 px-4 sm:px-6 lg:px-10">
+      <div className="mx-auto flex max-w-[110rem] items-center justify-between gap-3 px-4 sm:px-6 lg:px-10">
         <RayonSign id={headingId} title={title} eyebrow={eyebrow} accent={accent} icon={icon} countLabel={countLabel} as={headingLevel} />
-        <div className="flex shrink-0 items-center gap-1.5 pb-1">
+        <div className="flex shrink-0 items-center gap-1">
           {href ? (
             <Link
               href={href}
-              className="group/link inline-flex min-h-11 min-w-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-semibold text-forest-700 hover:bg-forest-700/8 sm:px-3"
+              className="group/link inline-flex min-h-10 min-w-10 items-center justify-center gap-1 rounded-full px-2 text-[0.8rem] font-semibold text-forest-700 hover:bg-forest-700/8 sm:px-3"
               aria-label={`${hrefLabel} : ${title}`}
             >
               <span className="hidden sm:inline">{hrefLabel}</span>
@@ -156,7 +156,7 @@ export function Shelf({
               onClick={() => scrollByPage(-1)}
               disabled={edges.start}
               aria-label={`Faire défiler « ${title} » vers la gauche`}
-              className="grid size-10 place-items-center rounded-full bg-white text-ink shadow-soft ring-1 ring-forest-900/10 transition hover:bg-forest-700 hover:text-white disabled:pointer-events-none disabled:opacity-35"
+              className="grid size-9 place-items-center rounded-full bg-white/80 text-ink ring-1 ring-forest-900/10 transition hover:bg-forest-700 hover:text-white disabled:pointer-events-none disabled:opacity-30"
             >
               <ChevronLeftIcon size={18} />
             </button>
@@ -165,7 +165,7 @@ export function Shelf({
               onClick={() => scrollByPage(1)}
               disabled={edges.end && nextOffset === null}
               aria-label={`Faire défiler « ${title} » vers la droite`}
-              className="grid size-10 place-items-center rounded-full bg-white text-ink shadow-soft ring-1 ring-forest-900/10 transition hover:bg-forest-700 hover:text-white disabled:pointer-events-none disabled:opacity-35"
+              className="grid size-9 place-items-center rounded-full bg-white/80 text-ink ring-1 ring-forest-900/10 transition hover:bg-forest-700 hover:text-white disabled:pointer-events-none disabled:opacity-30"
             >
               <ChevronRightIcon size={18} />
             </button>
@@ -173,11 +173,11 @@ export function Shelf({
         </div>
       </div>
 
-      <div ref={scrollerRef} className={cn("shelf-scroller mt-1", !edges.end && "shelf-fade-right")} tabIndex={-1}>
+      <div ref={scrollerRef} className={cn("shelf-scroller", !edges.end && "shelf-fade-right")} tabIndex={-1}>
         {products.length === 0 ? (
           <p className="mx-auto max-w-[110rem] px-4 py-10 text-ink-muted sm:px-6 lg:px-10">{emptyMessage}</p>
         ) : (
-          <ul className="shelf-track flex w-max min-w-full gap-0 px-2 pb-4 sm:px-4 lg:px-8" aria-label={`Produits : ${title}`}>
+          <ul className="shelf-track flex w-max min-w-full gap-0 px-2 pb-1 sm:px-4 lg:px-8" aria-label={`Produits : ${title}`}>
             {products.map((product, index) => (
               <ProductSlot key={product.id} product={product} priority={priority && index < 6} />
             ))}

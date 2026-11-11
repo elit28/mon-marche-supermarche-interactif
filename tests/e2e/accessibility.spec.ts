@@ -12,16 +12,15 @@ function serious(results: Awaited<ReturnType<typeof scan>>) {
 }
 
 test.describe("accessibilité (axe-core, WCAG 2.2 AA)", () => {
-  test("accueil, recherche, rayon et fiche", async ({ page }) => {
-    for (const url of ["/", "/recherche?q=chocolat", "/rayon/fromages", "/a-propos"]) {
+  test("accueil, recherche, rayon, fiche et commande", async ({ page }) => {
+    test.setTimeout(150_000);
+    await page.goto("/");
+    const href = await firstSlot(page).getByRole("link").first().getAttribute("href");
+    for (const url of ["/", "/recherche?q=chocolat", "/rayon/fromages", "/a-propos", "/commande", href!]) {
       await page.goto(url);
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("load");
+      await page.waitForTimeout(600);
       expect(serious(await scan(page)), url).toEqual([]);
-    }
-    const href = await firstSlot(page.context().pages()[0]!).getByRole("link").first().getAttribute("href").catch(() => null);
-    if (href) {
-      await page.goto(href);
-      expect(serious(await scan(page)), href).toEqual([]);
     }
   });
 
@@ -32,7 +31,8 @@ test.describe("accessibilité (axe-core, WCAG 2.2 AA)", () => {
     expect(serious(await scan(page))).toEqual([]);
     await page.keyboard.press("Escape");
     await expect(page.getByRole("heading", { name: "Votre panier" })).toBeHidden();
-    // Le lien d'évitement est le premier élément focalisable.
+    // Sur une page fraîche, le lien d'évitement est le premier élément focalisable.
+    await page.goto("/a-propos");
     await page.keyboard.press("Tab");
     await expect(page.getByRole("link", { name: "Aller au contenu" })).toBeFocused();
   });

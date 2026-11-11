@@ -20,7 +20,8 @@ const csp = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Serveur autonome pour l'image Docker (NEXT_OUTPUT=standalone) ; `pnpm start` sinon.
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,
   reactStrictMode: true,
   images: {

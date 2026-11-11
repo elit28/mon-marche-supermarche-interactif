@@ -24,6 +24,9 @@ export default async function StoreLayout({ children, modal }: { children: React
   const categories = await loadCategories();
   return (
     <>
+      <a href="#contenu" className="sr-only-focusable fixed left-3 top-2 z-[60] rounded-full bg-forest-700 px-4 py-2 text-sm font-semibold text-white">
+        Aller au contenu
+      </a>
       <DemoBanner />
       <Header categories={categories} />
       <main id="contenu" tabIndex={-1} className="outline-none">

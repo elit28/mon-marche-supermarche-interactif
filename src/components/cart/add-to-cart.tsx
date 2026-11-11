@@ -67,7 +67,7 @@ export function AddToCart({ product, variant = "overlay", className }: AddToCart
         <button
           type="button"
           onClick={() => actions.add(product, findImage())}
-          aria-label={`Ajouter ${label} au panier, ${formatPrice(finalPriceCents(product))}`}
+          aria-label={variant === "overlay" ? `Ajouter ${label} au panier, ${formatPrice(finalPriceCents(product))}` : undefined}
           className={cn(
             "group/add grid place-items-center rounded-full transition-[transform,background-color,box-shadow] duration-200 active:scale-90",
             variant === "overlay"
@@ -80,6 +80,7 @@ export function AddToCart({ product, variant = "overlay", className }: AddToCart
           ) : (
             <span className="flex items-center gap-2">
               <PlusIcon size={18} /> Ajouter au panier
+              <span className="sr-only"> : {label}</span>
             </span>
           )}
         </button>

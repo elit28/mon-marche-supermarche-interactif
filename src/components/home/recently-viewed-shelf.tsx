@@ -9,5 +9,5 @@ export function RecentlyViewedShelf() {
   const items = useRecentlyViewedStore((s) => s.items);
   const hydrated = useRecentlyViewedStore((s) => s.hydrated);
   if (!hydrated || items.length === 0) return null;
-  return <Shelf id="vus-recemment" title="Vus récemment" eyebrow="Pour vous" accent="#3f4d45" icon={<ClockIcon size={22} />} countLabel={`${items.length}`} products={items} />;
+  return <Shelf id="vus-recemment" title="Vus récemment" eyebrow="Pour vous" accent="#3f4d45" icon={<ClockIcon size={16} />} countLabel={`${items.length}`} products={items} />;
 }
