@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  qualite:
+    name: Lint, types, tests unitaires et d'intégration
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: monmarche
+          POSTGRES_PASSWORD: monmarche
+          POSTGRES_DB: monmarche_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U monmarche" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      TEST_DATABASE_URL: postgres://monmarche:monmarche@localhost:5432/monmarche_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  e2e:
+    name: Tests de bout en bout (Playwright)
+    runs-on: ubuntu-latest
+    needs: qualite
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: monmarche
+          POSTGRES_PASSWORD: monmarche
+          POSTGRES_DB: monmarche
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U monmarche" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgres://monmarche:monmarche@localhost:5432/monmarche
+      SESSION_SECRET: ci-secret-ci-secret-ci-secret-ci-secret-ci-secret
+      NEXT_PUBLIC_SITE_URL: http://localhost:3100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm db:setup
+      - run: pnpm build
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: rapport-playwright
+          path: playwright-report
+          retention-days: 7

@@ -1,0 +1,66 @@
+{
+  "name": "mon-marche",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MON MARCHÉ — supermarché virtuel français open source avec de vrais rayons interactifs, de vrais produits (Open Food Facts) et un panier instantané.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test --trace off",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/db-migrate.ts",
+    "db:seed": "tsx scripts/db-seed.ts",
+    "db:setup": "pnpm db:migrate && pnpm db:seed",
+    "catalog:fetch": "tsx scripts/catalog/fetch.ts",
+    "catalog:build": "tsx scripts/catalog/build.ts",
+    "catalog:import": "pnpm catalog:fetch && pnpm catalog:build && pnpm db:seed",
+    "catalog:refresh": "tsx scripts/catalog/refresh.ts",
+    "admin:create": "tsx scripts/admin-create.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.4",
+    "motion": "14.12.0",
+    "next": "16.4.6",
+    "postgres": "3.4.9",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "0.0.1",
+    "sharp": "0.35.5",
+    "zod": "4.6.7",
+    "zustand": "5.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "4.3.5",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "drizzle-kit": "0.31.11",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.6",
+    "jsdom": "26.1.0",
+    "tailwindcss": "4.3.5",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  }
+}
