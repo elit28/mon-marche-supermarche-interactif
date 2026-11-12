@@ -24,20 +24,32 @@ export function getDatabaseUrl(): string {
   return url;
 }
 
+/**
+ * Les connexions « poolées » (PgBouncer en mode transaction, ex. Neon `-pooler`)
+ * ne supportent pas les requêtes préparées : on les désactive dans ce cas.
+ */
+function usesTransactionPooler(url: string): boolean {
+  return process.env.DATABASE_PREPARE === "false" || /-pooler\.|pgbouncer=true/.test(url);
+}
+
 function createClient(max: number): postgres.Sql {
-  return postgres(getDatabaseUrl(), {
+  const url = getDatabaseUrl();
+  return postgres(url, {
     max,
     idle_timeout: 20,
-    connect_timeout: 10,
-    prepare: true,
+    connect_timeout: 15,
+    prepare: !usesTransactionPooler(url),
     onnotice: () => {},
   });
 }
 
+/** Hébergement « serverless » (Vercel…) : petits pools par instance. */
+const DEFAULT_POOL_SIZE = process.env.VERCEL ? "3" : "10";
+
 /** Client SQL brut (requêtes paramétrées en gabarits), types natifs (Date, etc.). */
 export function getSql(): postgres.Sql {
   if (!globalForDb.__monMarcheSql) {
-    globalForDb.__monMarcheSql = createClient(Number.parseInt(process.env.DATABASE_POOL_SIZE ?? "10", 10));
+    globalForDb.__monMarcheSql = createClient(Number.parseInt(process.env.DATABASE_POOL_SIZE ?? DEFAULT_POOL_SIZE, 10));
   }
   return globalForDb.__monMarcheSql;
 }
@@ -49,7 +61,7 @@ export function getSql(): postgres.Sql {
  */
 export function getDb(): Database {
   if (!globalForDb.__monMarcheDb) {
-    globalForDb.__monMarcheDbClient = createClient(4);
+    globalForDb.__monMarcheDbClient = createClient(process.env.VERCEL ? 2 : 4);
     globalForDb.__monMarcheDb = drizzle(globalForDb.__monMarcheDbClient, { schema, casing: "snake_case" });
   }
   return globalForDb.__monMarcheDb;

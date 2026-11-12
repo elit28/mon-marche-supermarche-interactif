@@ -3,7 +3,10 @@ import { figtree, fraunces } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000"),
+  ),
   title: { default: "MON MARCHÉ — vos courses, rayon par rayon", template: "%s · MON MARCHÉ" },
   description:
     "Supermarché virtuel français open source : parcourez de vrais rayons, de vrais produits et remplissez votre panier en un geste. Démonstration, prix fictifs.",

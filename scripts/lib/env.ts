@@ -13,3 +13,7 @@ for (const file of [".env.local", ".env"]) {
     }
   }
 }
+
+// Migrations et import : connexion directe si l'hébergeur en fournit une
+// (ex. Neon via Vercel : DATABASE_URL_UNPOOLED), plus sûre qu'un pool en mode transaction.
+if (process.env.DATABASE_URL_UNPOOLED) process.env.DATABASE_URL = process.env.DATABASE_URL_UNPOOLED;

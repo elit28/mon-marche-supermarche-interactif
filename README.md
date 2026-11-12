@@ -58,6 +58,11 @@ Démonstration complète sous Docker (base, import et application) :
 docker compose --profile app up --build
 ```
 
+### Mettre le site en ligne
+
+Gratuitement avec Vercel + Neon, en quelques clics : voir le guide pas à pas
+[docs/DEPLOIEMENT.md](docs/DEPLOIEMENT.md).
+
 ### Administration
 
 ```bash
