@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "vercel-build": "if [ -n \"$DATABASE_URL\" ]; then pnpm db:setup; else echo \"⚠️  DATABASE_URL absente : base non initialisée (connectez une base Neon puis redéployez).\"; fi && next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

@@ -24,7 +24,12 @@ const nextConfig: NextConfig = {
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,
   reactStrictMode: true,
+  // L'instantané du catalogue est lu par l'administration (réimport).
+  outputFileTracingIncludes: { "/admin/**": ["./data/catalog/products.json"] },
   images: {
+    // Sur Vercel, les WebP du catalogue (déjà optimisés à l'import) sont servis tels quels :
+    // pas de consommation du quota d'optimisation d'images.
+    unoptimized: process.env.VERCEL === "1" || process.env.NEXT_IMAGE_UNOPTIMIZED === "true",
     formats: ["image/avif", "image/webp"],
     qualities: [70, 80],
     deviceSizes: [360, 480, 640, 828, 1080, 1280, 1920],
