@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
   // Serveur autonome pour l'image Docker (NEXT_OUTPUT=standalone) ; `pnpm start` sinon.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,
+  // Pas de fichier d'instructions généré automatiquement par `next dev`.
+  agentRules: false,
   reactStrictMode: true,
   // L'instantané du catalogue est lu par l'administration (réimport).
   outputFileTracingIncludes: { "/admin/**": ["./data/catalog/products.json"] },
